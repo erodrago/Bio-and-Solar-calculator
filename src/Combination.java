@@ -12,17 +12,17 @@
 		Cp  =   Specific heat of water	(kJ/kg0C)
 		L   =   Latent heat of water	(kJ/kg)
 		A   =   Surface Area (m2)	
-        I   =   solar radiation flux incident (w/m2)
-        t   =   Number of hour (hr)
+	        I   =   solar radiation flux incident (w/m2)
+	        t   =   Number of hour (hr)
 
         
-        Ww  =   Moisture removed	
-        Wd  =   Dry weight of bananas	
-        Tc  =   Change in temperature	
-        Mi  =   initial moisture content d.b.	
-        Qt  =   Total heat required	
-        Qin  =   solar energy available	
-		*/
+	        Ww  =   Moisture removed	
+	        Wd  =   Dry weight of bananas	
+	        Tc  =   Change in temperature	
+	        Mi  =   initial moisture content d.b.	
+	        Qt  =   Total heat required	
+	        Qin  =   solar energy available	
+*/
 
 
 import java.io.*;
@@ -88,218 +88,216 @@ public class Combination extends Frame implements ActionListener {
 			
 	//This function updates the contents of the form
 	public void formUpdateBS(){ 
-			double Wp;
+		double Wp;
 			
-			Wp = Double.parseDouble( textfieldWp.getText() );
-			Mw1 = Double.parseDouble( textfieldMw1.getText() );
-			Mw2 = Double.parseDouble( textfieldMw2.getText() );
-			Cd = Double.parseDouble( textfieldCd.getText() );
-			T1 = Double.parseDouble( textfieldT1.getText() );
-			T2 = Double.parseDouble( textfieldT2.getText() );
-			Cp = Double.parseDouble( textfieldCp.getText() );
-			L = Double.parseDouble( textfieldL.getText() );
-			textfieldBe.setText("0.8");
-			Be = Double.parseDouble( textfieldBe.getText() );
-			textfieldHv1.setText("1800");
-			Hv1 = Double.parseDouble( textfieldHv1.getText() );
-			textfieldI.setText("500");
-			I = Double.parseDouble( textfieldI.getText() );
-			textfieldA.setText("99.2");
-			A = Double.parseDouble( textfieldA.getText() );
+		Wp = Double.parseDouble( textfieldWp.getText() );
+		Mw1 = Double.parseDouble( textfieldMw1.getText() );
+		Mw2 = Double.parseDouble( textfieldMw2.getText() );
+		Cd = Double.parseDouble( textfieldCd.getText() );
+		T1 = Double.parseDouble( textfieldT1.getText() );
+		T2 = Double.parseDouble( textfieldT2.getText() );
+		Cp = Double.parseDouble( textfieldCp.getText() );
+		L = Double.parseDouble( textfieldL.getText() );
+		textfieldBe.setText("0.8");
+		Be = Double.parseDouble( textfieldBe.getText() );
+		textfieldHv1.setText("1800");
+		Hv1 = Double.parseDouble( textfieldHv1.getText() );
+		textfieldI.setText("500");
+		I = Double.parseDouble( textfieldI.getText() );
+		textfieldA.setText("99.2");
+		A = Double.parseDouble( textfieldA.getText() );
 				
 				
 				
 				
 				
 				
-			// Compute Moisture removed Ww
+		// Compute Moisture removed Ww
 		
-			Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
+		Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
 			
-			// Compute dry weight
-			Wd = Wp - Ww;
+		// Compute dry weight
+		Wd = Wp - Ww;
 				
-			// Compute Change in temperature
-	        
-			Tc = T2 - T1;
+		// Compute Change in temperature
+        
+		Tc = T2 - T1;
 				
-			// Compute initial moisture content d.b.
+		// Compute initial moisture content d.b.
 
-			Mi = (Mw1/(100-Mw1))*100;
+		Mi = (Mw1/(100-Mw1))*100;
 				
-			// Compute Total heat required
+		// Compute Total heat required
 				
 
-			Qt = Wd*Cd*Tc + Mi*Cp*Tc + Ww*L;
-			// Qt should be equal to Qin = Qb
-			Qb = Qt;
-			Qin = Qt;
-			// Compute Biomass heat supply
-				
-			Qavail = 0.5*(Qb + Qin);
+		Qt = Wd*Cd*Tc + Mi*Cp*Tc + Ww*L;
+		// Qt should be equal to Qin = Qb
+		Qb = Qt;
+		Qin = Qt;
 
-			M1 = 0.5*(Qb/(Be*Hv1));
-				
-			// Compute Biomass heat supply
+		// Compute Biomass heat supply
+			
+		Qavail = 0.5*(Qb + Qin);
 
-			t = 0.5*(Qin/(A*I));
+		M1 = 0.5*(Qb/(Be*Hv1));
+				
+		// Compute Biomass heat supply
+
+		t = 0.5*(Qin/(A*I));
 				
 				
 					
-			textfieldWp.setText(String.valueOf(new Double(Wp)));	
-			textfieldWw.setText(String.valueOf(new Double(Ww)));
-			textfieldWd.setText(String.valueOf(new Double(Wd)));
-			textfieldTc.setText(String.valueOf(new Double(Tc)));
-			textfieldMi.setText(String.valueOf(new Double(Mi)));
-			textfieldQt.setText(String.valueOf(new Double(Qt)));
-			textfieldQb.setText(String.valueOf(new Double(Qb)));
-			textfieldM1.setText(String.valueOf(new Double(M1/10)));
-			textfieldQin.setText(String.valueOf(new Double(Qin)));
-			textfieldt.setText(String.valueOf(new Double(t)));
-			textfieldQavail.setText(String.valueOf(new Double(Qavail)));
-		}
+		textfieldWp.setText(String.valueOf(new Double(Wp)));	
+		textfieldWw.setText(String.valueOf(new Double(Ww)));
+		textfieldWd.setText(String.valueOf(new Double(Wd)));
+		textfieldTc.setText(String.valueOf(new Double(Tc)));
+		textfieldMi.setText(String.valueOf(new Double(Mi)));
+		textfieldQt.setText(String.valueOf(new Double(Qt)));
+		textfieldQb.setText(String.valueOf(new Double(Qb)));
+		textfieldM1.setText(String.valueOf(new Double(M1/10)));
+		textfieldQin.setText(String.valueOf(new Double(Qin)));
+		textfieldt.setText(String.valueOf(new Double(t)));
+		textfieldQavail.setText(String.valueOf(new Double(Qavail)));
+	}
 			
-		public void formUpdateB(){ 
-			double Wp;
-			textfieldBe.setText("0.8");
-			textfieldHv1.setText("18000");
+	public void formUpdateB(){ 
+		double Wp;
+		textfieldBe.setText("0.8");
+		textfieldHv1.setText("18000");
 				
-			Wp = Double.parseDouble( textfieldWp.getText() );
-			Mw1 = Double.parseDouble( textfieldMw1.getText() );
-			Mw2 = Double.parseDouble( textfieldMw2.getText() );
-			Cd = Double.parseDouble( textfieldCd.getText() );
-			T1 = Double.parseDouble( textfieldT1.getText() );
-			T2 = Double.parseDouble( textfieldT2.getText() );
-			Cp = Double.parseDouble( textfieldCp.getText() );
-			L = Double.parseDouble( textfieldL.getText() );
-			Be = Double.parseDouble( textfieldBe.getText() );
-			Hv1 = Double.parseDouble( textfieldHv1.getText() );
-				
-			textfieldQin.setText("---");
-			textfieldt.setText("---");
-			textfieldQavail.setText("---");
-			textfieldA.setText("---");
-			textfieldI.setText("---");
+		Wp = Double.parseDouble( textfieldWp.getText() );
+		Mw1 = Double.parseDouble( textfieldMw1.getText() );
+		Mw2 = Double.parseDouble( textfieldMw2.getText() );
+		Cd = Double.parseDouble( textfieldCd.getText() );
+		T1 = Double.parseDouble( textfieldT1.getText() );
+		T2 = Double.parseDouble( textfieldT2.getText() );
+		Cp = Double.parseDouble( textfieldCp.getText() );
+		L = Double.parseDouble( textfieldL.getText() );
+		Be = Double.parseDouble( textfieldBe.getText() );
+		Hv1 = Double.parseDouble( textfieldHv1.getText() );
 			
-			// Compute Moisture removed Ww
+		textfieldQin.setText("---");
+		textfieldt.setText("---");
+		textfieldQavail.setText("---");
+		textfieldA.setText("---");
+		textfieldI.setText("---");
+		
+		// Compute Moisture removed Ww
 				
-			Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
+		Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
 						
-			// Compute dry weight
-			Wd = Wp - Ww;
+		// Compute dry weight
+		Wd = Wp - Ww;
 						
-			// Compute Change in temperature
+		// Compute Change in temperature
 				        
-			Tc = T2 - T1;
+		Tc = T2 - T1;
 						
-			// Compute initial moisture content d.b.
+		// Compute initial moisture content d.b.
 
-			Mi = (Mw1/(100-Mw1))*100;
+		Mi = (Mw1/(100-Mw1))*100;
 						
-			// Compute Total heat required
+		// Compute Total heat required
 						
 
-			Qt = Wd*Cd*Tc + Mi*Cp*Tc + Ww*L;
-			// Qt should be equal to Qin
-			Qb = Qt;
+		Qt = Wd*Cd*Tc + Mi*Cp*Tc + Ww*L;
+		// Qt should be equal to Qin
+		Qb = Qt;
 						
-			// Compute Biomass heat supply
+		// Compute Biomass heat supply
 
-			M1 = Qb/(Be*Hv1);
+		M1 = Qb/(Be*Hv1);
 						
 				
 				
 				
-			textfieldWp.setText(String.valueOf(new Double(Wp)));	
-			textfieldWw.setText(String.valueOf(new Double(Ww)));
-			textfieldWd.setText(String.valueOf(new Double(Wd)));
-			textfieldTc.setText(String.valueOf(new Double(Tc)));
-			textfieldMi.setText(String.valueOf(new Double(Mi)));
-			textfieldQt.setText(String.valueOf(new Double(Qt)));
-			textfieldQb.setText(String.valueOf(new Double(Qb)));
-			textfieldM1.setText(String.valueOf(new Double(M1)));
-		}
+		textfieldWp.setText(String.valueOf(new Double(Wp)));	
+		textfieldWw.setText(String.valueOf(new Double(Ww)));
+		textfieldWd.setText(String.valueOf(new Double(Wd)));
+		textfieldTc.setText(String.valueOf(new Double(Tc)));
+		textfieldMi.setText(String.valueOf(new Double(Mi)));
+		textfieldQt.setText(String.valueOf(new Double(Qt)));
+		textfieldQb.setText(String.valueOf(new Double(Qb)));
+		textfieldM1.setText(String.valueOf(new Double(M1)));
+	}
 			
-		public void formUpdateS(){ 
-			double Wp;
-			textfieldI.setText("500");
-				textfieldA.setText("75.2");
-				Wp = Double.parseDouble( textfieldWp.getText() );
-				Mw1 = Double.parseDouble( textfieldMw1.getText() );
-				Mw2 = Double.parseDouble( textfieldMw2.getText() );
-				Cd = Double.parseDouble( textfieldCd.getText() );
-				T1 = Double.parseDouble( textfieldT1.getText() );
-				T2 = Double.parseDouble( textfieldT2.getText() );
-				Cp = Double.parseDouble( textfieldCp.getText() );
-				L = Double.parseDouble( textfieldL.getText() );
-				A = Double.parseDouble( textfieldA.getText() );
-				I = Double.parseDouble( textfieldI.getText() );
-				textfieldBe.setText("---");
-				textfieldHv1.setText("---");
+	public void formUpdateS(){ 
+		double Wp;
+		textfieldI.setText("500");
+		textfieldA.setText("75.2");
+		Wp = Double.parseDouble( textfieldWp.getText() );
+		Mw1 = Double.parseDouble( textfieldMw1.getText() );
+		Mw2 = Double.parseDouble( textfieldMw2.getText() );
+		Cd = Double.parseDouble( textfieldCd.getText() );
+		T1 = Double.parseDouble( textfieldT1.getText() );
+		T2 = Double.parseDouble( textfieldT2.getText() );
+		Cp = Double.parseDouble( textfieldCp.getText() );
+		L = Double.parseDouble( textfieldL.getText() );
+		A = Double.parseDouble( textfieldA.getText() );
+		I = Double.parseDouble( textfieldI.getText() );
+		textfieldBe.setText("---");
+		textfieldHv1.setText("---");
+			
 				
+		// Compute Moisture removed Ww
 				
-				// Compute Moisture removed Ww
-				
-						Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
+		Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
 						
-						// Compute dry weight
-						 Wd = Wp - Ww;
+		// Compute dry weight
+		Wd = Wp - Ww;
 						
-						// Compute Change in temperature
+		// Compute Change in temperature
 				        
-						Tc = T2 - T1;
+		Tc = T2 - T1;
 						
-						// Compute initial moisture content d.b.
+		// Compute initial moisture content d.b.
 
-						Mi = (Mw1/(100-Mw1))*100;
+		Mi = (Mw1/(100-Mw1))*100;
 						
-						// Compute Total heat required
+		// Compute Total heat required
 						
 
-						Qt = Wd*Cd*Tc + Mi*Cp*Tc + Ww*L;
-						// Qt should be equal to Qin
-						Qin = Qt;
-						
-						// Compute Biomass heat supply
+		Qt = Wd*Cd*Tc + Mi*Cp*Tc + Ww*L;
+		// Qt should be equal to Qin
+		Qin = Qt;
+				
+		// Compute Biomass heat supply
 
-						t = Qin/(A*I);
+		t = Qin/(A*I);
 						
 				
 				
 				
 				
-			textfieldWw.setText(String.valueOf(new Double(Ww)));
-			textfieldWd.setText(String.valueOf(new Double(Wd)));
-			textfieldTc.setText(String.valueOf(new Double(Tc)));
-			textfieldMi.setText(String.valueOf(new Double(Mi)));
-			textfieldQt.setText(String.valueOf(new Double(Qt)));
-			textfieldQin.setText(String.valueOf(new Double(Qin)));
-			textfieldt.setText(String.valueOf(new Double(t)));
-			textfieldQb.setText("---");
-			textfieldM1.setText("---");
-			textfieldQavail.setText("---");
-			}
+		textfieldWw.setText(String.valueOf(new Double(Ww)));
+		textfieldWd.setText(String.valueOf(new Double(Wd)));
+		textfieldTc.setText(String.valueOf(new Double(Tc)));
+		textfieldMi.setText(String.valueOf(new Double(Mi)));
+		textfieldQt.setText(String.valueOf(new Double(Qt)));
+		textfieldQin.setText(String.valueOf(new Double(Qin)));
+		textfieldt.setText(String.valueOf(new Double(t)));
+		textfieldQb.setText("---");
+		textfieldM1.setText("---");
+		textfieldQavail.setText("---");
+	}
 				
 			
-			//This function updates the contents of the form upon the button click
-			public void actionPerformed(ActionEvent e) {
-				 String str = e.getActionCommand();	    // to know which Java button user clicked
-				    System.out.println("You clicked " + str + " button");  // just beginner's interest
+	//This function updates the contents of the form upon the button click
+	public void actionPerformed(ActionEvent e) {
+		String str = e.getActionCommand();	    // to know which Java button user clicked
+		System.out.println("You clicked " + str + " button");  // just beginner's interest
 
-				    if(str.equals("Compute(Solar mode)"))
-				    {
-				      formUpdateS();
-				    }
-				    else if(str.equals("Compute(Biomass mode)"))
-				    {
-				      formUpdateB();
-				    }
-				    else if(str.equals("Compute(Solar&Biomass mode)"))
-				    {
-				      formUpdateBS();
-				    }
+		if(str.equals("Compute(Solar mode)")){
+			formUpdateS();
+		}
+		else if(str.equals("Compute(Biomass mode)")){
+			formUpdateB();
+		}
+		else if(str.equals("Compute(Solar&Biomass mode)")){
+			formUpdateBS();
+		}
 				
-			}	
+	}	
 			
 			
 				
@@ -563,24 +561,22 @@ public class Combination extends Frame implements ActionListener {
 			
 			
 			
-			public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 				
-				Combination combination = new Combination();
-				combination.GraphicalUserInterface();
+		Combination combination = new Combination();
+		combination.GraphicalUserInterface();
 				
 				
+	}
+				
+	public Combination(){
+
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				dispose();
+			        System.exit(0); 
 			}
-				
-				public Combination()
-				{
-				   addWindowListener(new WindowAdapter()
-				   {
-				      public void windowClosing(WindowEvent e)
-				      {
-				        dispose();
-				        System.exit(0); 
-				      }
-				   });
-				}
+		   });
+	}
 			
-		}
+}
