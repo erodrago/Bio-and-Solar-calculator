@@ -47,8 +47,9 @@ public class Combination extends Frame implements ActionListener {
 	double L	= 2264.76;
 	double Be	= 0.8;	
 	double Hv1	= 18000;
-	double A	= 99.2;	
+	double A	= 102.18;	
 	double I	= 500;
+	double T    = 0.5;
 	double t, M1, Ww, Wd, Tc, Mi, Qt, Qin, Qb, Qavail;
 	
 	
@@ -76,8 +77,8 @@ public class Combination extends Frame implements ActionListener {
 	TextField textfieldBe = new TextField("0.8");
 	TextField textfieldHv1 = new TextField("1800");
 	TextField textfieldI = new TextField("500");
-	TextField textfieldA = new TextField("99.2");
-			
+	TextField textfieldA = new TextField("102.18");
+	TextField textfieldtransmitters = new TextField("0.5");
 			
 	// Create button to help perform computations
 	Button buttonComputeS = new Button("Compute(Solar mode)");
@@ -104,8 +105,9 @@ public class Combination extends Frame implements ActionListener {
 		Hv1 = Double.parseDouble( textfieldHv1.getText() );
 		textfieldI.setText("500");
 		I = Double.parseDouble( textfieldI.getText() );
-		textfieldA.setText("99.2");
+		textfieldA.setText("102.18");
 		A = Double.parseDouble( textfieldA.getText() );
+		T = Double.parseDouble(textfieldtransmitters.getText());
 				
 				
 				
@@ -143,7 +145,7 @@ public class Combination extends Frame implements ActionListener {
 				
 		// Compute Biomass heat supply
 
-		t = 0.5*(Qin/(A*I));
+		t = 0.5*(Qin/(A*I*T));
 				
 				
 					
@@ -162,8 +164,8 @@ public class Combination extends Frame implements ActionListener {
 			
 	public void formUpdateB(){ 
 		double Wp;
-		textfieldBe.setText("0.8");
-		textfieldHv1.setText("18000");
+		textfieldBe.setText(textfieldBe.getText());
+		textfieldHv1.setText(textfieldHv1.getText());
 				
 		Wp = Double.parseDouble( textfieldWp.getText() );
 		Mw1 = Double.parseDouble( textfieldMw1.getText() );
@@ -181,7 +183,7 @@ public class Combination extends Frame implements ActionListener {
 		textfieldQavail.setText("---");
 		textfieldA.setText("---");
 		textfieldI.setText("---");
-		
+		textfieldtransmitters.setText("---");
 		// Compute Moisture removed Ww
 				
 		Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
@@ -223,8 +225,8 @@ public class Combination extends Frame implements ActionListener {
 			
 	public void formUpdateS(){ 
 		double Wp;
-		textfieldI.setText("500");
-		textfieldA.setText("75.2");
+		textfieldI.setText(textfieldI.getText());
+		textfieldA.setText(textfieldA.getText());
 		Wp = Double.parseDouble( textfieldWp.getText() );
 		Mw1 = Double.parseDouble( textfieldMw1.getText() );
 		Mw2 = Double.parseDouble( textfieldMw2.getText() );
@@ -235,6 +237,7 @@ public class Combination extends Frame implements ActionListener {
 		L = Double.parseDouble( textfieldL.getText() );
 		A = Double.parseDouble( textfieldA.getText() );
 		I = Double.parseDouble( textfieldI.getText() );
+		T = Double.parseDouble(textfieldtransmitters.getText());
 		textfieldBe.setText("---");
 		textfieldHv1.setText("---");
 			
@@ -263,7 +266,7 @@ public class Combination extends Frame implements ActionListener {
 				
 		// Compute Biomass heat supply
 
-		t = Qin/(A*I);
+		t = Qin/(A*I*T);
 						
 				
 				
@@ -389,8 +392,11 @@ public class Combination extends Frame implements ActionListener {
 				Label labels = new Label("solar radiation flux incident (I)");
 				Label labelt = new Label("w/m\u00b2");
 				Label labelu = new Label("Surface Area (A)");
+				
 				Label labelv = new Label("m\u00b2");
 				Label labelw = new Label();
+				Label transmitterslabel = new Label("Cover transmittance (T)");
+				Label labeltr = new Label("");
 				labelw.setBackground(Color.yellow);
 				Label labelx = new Label();
 				labelx.setBackground(Color.yellow);
@@ -503,11 +509,18 @@ public class Combination extends Frame implements ActionListener {
 				frame.add(labelt);
 				frame.add(labelu);
 				frame.add(textfieldA);
+				
+
 				frame.add(labelv);
+				frame.add(transmitterslabel);
+				frame.add(textfieldtransmitters);
+				frame.add(labeltr);
 				frame.add(labelw);
-				frame.add(labelx);
-				frame.add(labely);
-				frame.add(labelz);
+
+				
+//				frame.add(labelx);
+//				frame.add(labely);
+//				frame.add(labelz);
 				frame.add(labelza);
 				frame.add(labelzb);
 				frame.add(label2);
