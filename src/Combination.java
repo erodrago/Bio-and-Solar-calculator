@@ -14,6 +14,7 @@
 		A   =   Surface Area (m2)	
 	        I   =   solar radiation flux incident (w/m2)
 	        t   =   Number of hour (hr)
+	        T   =   Cover transmittance
 
         
 	        Ww  =   Moisture removed	
@@ -29,6 +30,9 @@ import java.io.*;
 import java.text.AttributedString;
 import java.awt.*;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
 
@@ -50,7 +54,7 @@ public class Combination extends Frame implements ActionListener {
 	double A	= 102.18;	
 	double I	= 500;
 	double T    = 0.5;
-	double t, M1, Ww, Wd, Tc, Mi, Qt, Qin, Qb, Qavail;
+	double time, M1, Ww, Wd, Tc, Mi, Qt, Qin, Qb, Qavail;
 	
 	
 	// Create textFields to display data on the form
@@ -77,7 +81,7 @@ public class Combination extends Frame implements ActionListener {
 	TextField textfieldL = new TextField("2264.76");
 		
 	TextField textfieldBe = new TextField("0.8");
-	TextField textfieldHv1 = new TextField("1800");
+	TextField textfieldHv1 = new TextField("18000");
 	TextField textfieldI = new TextField("500");
 	TextField textfieldA = new TextField("102.18");
 	TextField textfieldtransmitters = new TextField("0.5");
@@ -97,7 +101,7 @@ public class Combination extends Frame implements ActionListener {
 		textfieldtransmitters.setText("0.5");
 		
 	}
-	//This function updates form when compute solar bio is pressed
+	
 	public void computeAll(){ 
 		double Wp;
 			
@@ -139,12 +143,12 @@ public class Combination extends Frame implements ActionListener {
 		Qb = Qt;
 		Qin = Qt;
 
-		// Compute Biomass heat supply
+		// Compute all heat supply
 		Qavail = 0.5*(Qb + Qin);
-		
 		M1 = 0.5*(Qb/(Be*Hv1));		
-		// Compute Biomass heat supply
-		t = 0.5*(Qin/(A*I*T));
+		
+		// Compute time for allmodes
+		time = 0.5*(Qin/(A*I*T));
 				
 		textfieldWp.setText(String.valueOf(new Double(Wp)));	
 		textfieldWw.setText(String.valueOf(new Double(Ww)));
@@ -155,13 +159,13 @@ public class Combination extends Frame implements ActionListener {
 		textfieldQb.setText(String.valueOf(new Double(Qb)));
 		textfieldM1.setText(String.valueOf(new Double(M1/10)));
 		textfieldQin.setText(String.valueOf(new Double(Qin)));
-		textfieldt.setText(String.valueOf(new Double(t)));
+		textfieldt.setText(String.valueOf(new Double(time)));
 		textfieldQavail.setText(String.valueOf(new Double(Qavail)));
 	}
 	
 	public void biomassChecked() {
 		textfieldBe.setText("0.8");
-		textfieldHv1.setText("1800");
+		textfieldHv1.setText("18000");
 		textfieldA.setText("---");
 		textfieldI.setText("---");
 		textfieldtransmitters.setText("---");
@@ -181,9 +185,7 @@ public class Combination extends Frame implements ActionListener {
 		Be = Double.parseDouble( textfieldBe.getText() );
 		Hv1 = Double.parseDouble( textfieldHv1.getText() );
 			
-		textfieldQin.setText("---");
-		textfieldt.setText("---");
-		textfieldQavail.setText("---");
+		
 		
 		
 		// Compute Moisture removed Ww
@@ -206,7 +208,13 @@ public class Combination extends Frame implements ActionListener {
 						
 		// Compute Biomass heat supply
 		M1 = Qb/(Be*Hv1);
-						
+		
+		time = (M1/2) -1; 
+		
+		
+		textfieldQin.setText("---");
+		textfieldt.setText(String.valueOf(new Double(time)));
+		textfieldQavail.setText("---");
 		textfieldWp.setText(String.valueOf(new Double(Wp)));	
 		textfieldWw.setText(String.valueOf(new Double(Ww)));
 		textfieldWd.setText(String.valueOf(new Double(Wd)));
@@ -239,7 +247,6 @@ public class Combination extends Frame implements ActionListener {
 		I = Double.parseDouble( textfieldI.getText() );
 		T = Double.parseDouble(textfieldtransmitters.getText());
 		
-			
 				
 		// Compute Moisture removed Ww		
 		Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
@@ -260,7 +267,7 @@ public class Combination extends Frame implements ActionListener {
 		Qin = Qt;
 				
 		// Compute Biomass heat supply
-		t = Qin/(A*I*T);
+		time = Qin/(A*I*T);
 						
 		textfieldWw.setText(String.valueOf(new Double(Ww)));
 		textfieldWd.setText(String.valueOf(new Double(Wd)));
@@ -268,7 +275,7 @@ public class Combination extends Frame implements ActionListener {
 		textfieldMi.setText(String.valueOf(new Double(Mi)));
 		textfieldQt.setText(String.valueOf(new Double(Qt)));
 		textfieldQin.setText(String.valueOf(new Double(Qin)));
-		textfieldt.setText(String.valueOf(new Double(t)));
+		textfieldt.setText(String.valueOf(new Double(time)));
 		textfieldQb.setText("---");
 		textfieldM1.setText("---");
 		textfieldQavail.setText("---");
@@ -343,6 +350,9 @@ public class Combination extends Frame implements ActionListener {
 		Checkbox chkCombined = new Checkbox("Combined",modeGroup,false);
 		chkCombined.setBackground(Color.white);
 		
+		
+		//Where to change checkbox items
+		
 		chkSolar.addItemListener(new ItemListener() {
 			
 			@Override
@@ -400,7 +410,7 @@ public class Combination extends Frame implements ActionListener {
 		textfieldQb.setText(String.valueOf(new Double(Qb)));
 		textfieldM1.setText(String.valueOf(new Double(M1)));
 		textfieldQin.setText(String.valueOf(new Double(M1)));
-		textfieldt.setText(String.valueOf(new Double(t)));
+		textfieldt.setText(String.valueOf(new Double(time)));
 		textfieldQavail.setText(String.valueOf(new Double(Qavail)));
 				
 		addRow(frame, "Moisture Removed(Ww)", textfieldWw, "kg");
@@ -449,6 +459,43 @@ public class Combination extends Frame implements ActionListener {
 		addYellowLine(frame);
 		frame.pack();
 		frame.setVisible(true);
+		frame.addWindowListener(new WindowListener() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				frame.dispose();
+			}
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 			
 			
