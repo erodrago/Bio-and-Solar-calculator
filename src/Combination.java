@@ -86,12 +86,17 @@ public class Combination extends Frame implements ActionListener {
 	Font font = new Font("Verdana",Font.BOLD,12);
 
 	// Create button to help perform computations
-	Button buttonComputeS = new Button("Compute(Solar mode)");
-	Button buttonComputeB = new Button("Compute(Biomass mode)");
-	Button buttonComputeSB = new Button("Compute(Solar&Biomass mode)");
+	Button buttonCompute = new Button("Compute");
 			
 			
-			
+	public void combinedChecked() {
+		textfieldBe.setText("0.8");
+		textfieldHv1.setText("1800");
+		textfieldI.setText("500");
+		textfieldA.setText("102.18");
+		textfieldtransmitters.setText("0.5");
+		
+	}
 	//This function updates form when compute solar bio is pressed
 	public void computeAll(){ 
 		double Wp;
@@ -153,12 +158,18 @@ public class Combination extends Frame implements ActionListener {
 		textfieldt.setText(String.valueOf(new Double(t)));
 		textfieldQavail.setText(String.valueOf(new Double(Qavail)));
 	}
+	
+	public void biomassChecked() {
+		textfieldBe.setText("0.8");
+		textfieldHv1.setText("1800");
+		textfieldA.setText("---");
+		textfieldI.setText("---");
+		textfieldtransmitters.setText("---");
+		
+	}
 			
 	public void computeBiomass(){ 
 		double Wp;
-		textfieldBe.setText(textfieldBe.getText());
-		textfieldHv1.setText(textfieldHv1.getText());
-				
 		Wp = Double.parseDouble( textfieldWp.getText() );
 		Mw1 = Double.parseDouble( textfieldMw1.getText() );
 		Mw2 = Double.parseDouble( textfieldMw2.getText() );
@@ -173,9 +184,7 @@ public class Combination extends Frame implements ActionListener {
 		textfieldQin.setText("---");
 		textfieldt.setText("---");
 		textfieldQavail.setText("---");
-		textfieldA.setText("---");
-		textfieldI.setText("---");
-		textfieldtransmitters.setText("---");
+		
 		
 		// Compute Moisture removed Ww
 		Ww = (Wp*(Mw1-Mw2)/(100-Mw2));
@@ -207,11 +216,17 @@ public class Combination extends Frame implements ActionListener {
 		textfieldQb.setText(String.valueOf(new Double(Qb)));
 		textfieldM1.setText(String.valueOf(new Double(M1)));
 	}
+	
+	public void solarChecked() {
+		textfieldI.setText("500");
+		textfieldA.setText("102.18");
+		textfieldtransmitters.setText("0.5");
+		textfieldBe.setText("---");
+		textfieldHv1.setText("---");
+	}
 			
 	public void computeSolar(){ 
 		double Wp;
-		textfieldI.setText(textfieldI.getText());
-		textfieldA.setText(textfieldA.getText());
 		Wp = Double.parseDouble( textfieldWp.getText() );
 		Mw1 = Double.parseDouble( textfieldMw1.getText() );
 		Mw2 = Double.parseDouble( textfieldMw2.getText() );
@@ -223,8 +238,7 @@ public class Combination extends Frame implements ActionListener {
 		A = Double.parseDouble( textfieldA.getText() );
 		I = Double.parseDouble( textfieldI.getText() );
 		T = Double.parseDouble(textfieldtransmitters.getText());
-		textfieldBe.setText("---");
-		textfieldHv1.setText("---");
+		
 			
 				
 		// Compute Moisture removed Ww		
@@ -261,21 +275,7 @@ public class Combination extends Frame implements ActionListener {
 	}
 				
 			
-	//This function updates the contents of the form upon the button click
-	public void actionPerformed(ActionEvent e) {
-		String str = e.getActionCommand();	    // to know which Java button user clicked
-	
-		if(str.equals("Compute(Solar mode)")){
-			computeSolar();
-		}
-		else if(str.equals("Compute(Biomass mode)")){
-			computeBiomass();
-		}
-		else if(str.equals("Compute(Solar&Biomass mode)")){
-			computeAll();
-		}
-				
-	}	
+		
 	public void addYellowLine(Frame frame) {
 		for(int i=0; i<3; i++) {
 		Label label = new Label();
@@ -326,7 +326,7 @@ public class Combination extends Frame implements ActionListener {
 				
 		textfieldWp.setBackground(Color.white);
 		textfieldWp.setForeground(Color.darkGray);
-		frame.setLayout (new GridLayout(32,3));
+		frame.setLayout (new GridLayout(34,3));
 		frame.add(textfieldWp);
 				
 		Label labelBananWeightUnit = new Label("kg");
@@ -334,6 +334,46 @@ public class Combination extends Frame implements ActionListener {
 		labelBananWeightUnit.setFont(font);
 		frame.add(labelBananWeightUnit);
 				
+		CheckboxGroup modeGroup = new CheckboxGroup();
+		
+		Checkbox chkSolar = new Checkbox("Solar",modeGroup,false);
+		chkSolar.setBackground(Color.white);
+		Checkbox chkBiomass = new Checkbox("Biomass",modeGroup,false);
+		chkBiomass.setBackground(Color.white);
+		Checkbox chkCombined = new Checkbox("Combined",modeGroup,false);
+		chkCombined.setBackground(Color.white);
+		
+		chkSolar.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				solarChecked();
+			}
+		});
+		chkBiomass.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				biomassChecked();
+			}
+		});
+		chkCombined.addItemListener(new ItemListener() {
+	
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				combinedChecked();
+			}
+		});
+		
+		addHeading(frame, "Choose mode:");
+		frame.add(chkSolar);
+		frame.add(chkBiomass);
+		frame.add(chkCombined);
+		
+		
 		addYellowLine(frame);
 		addYellowLine(frame);
 				
@@ -376,17 +416,35 @@ public class Combination extends Frame implements ActionListener {
 			
 				
 		addYellowLine(frame);
-		buttonComputeB.setBackground(Color.WHITE);
-		buttonComputeS.addActionListener(this);
-		frame.add(buttonComputeS);
+		Label label = new Label();
+		label.setBackground(Color.yellow);
+		frame.add(label);
 				
-		buttonComputeS.setBackground(Color.WHITE);
-		buttonComputeB.addActionListener(this);
-		frame.add(buttonComputeB);
+		buttonCompute.setBackground(Color.WHITE);
+		buttonCompute.addActionListener(this);
+		buttonCompute.setFont(font);
+		
+		buttonCompute.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				
-		buttonComputeSB.setBackground(Color.WHITE);
-		buttonComputeSB.addActionListener(this);
-		frame.add(buttonComputeSB);
+				if(chkSolar.getState() == true) {
+					computeSolar();
+				}else if(chkBiomass.getState() == true) {
+					computeBiomass();
+				}else if(chkCombined.getState()==true) {
+					computeAll();
+				}
+			}
+		});
+		
+		frame.add(buttonCompute);
+				
+		Label label1 = new Label();
+		label1.setBackground(Color.yellow);
+		frame.add(label1);
 		addYellowLine(frame);
 		addYellowLine(frame);
 		frame.pack();
@@ -400,5 +458,10 @@ public class Combination extends Frame implements ActionListener {
 				
 		Combination combination = new Combination();
 		combination.GraphicalUserInterface();			
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}	
 }
